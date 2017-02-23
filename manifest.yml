@@ -1,0 +1,9 @@
+applications:
+- name: weatherappclient
+  memory: 512M
+  host: weatherappclient
+  domain: local.pcfdev.io
+  env:
+    T_SERVICE_HOST: citytemperatures.local.pcfdev.io
+  services:
+  - instance1
