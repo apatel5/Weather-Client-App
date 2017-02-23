@@ -64,21 +64,7 @@ public class WeatherClientAppApplication {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		Map<String, Object> urlVars = new HashMap<String, Object>();
-
-		urlVars.put("date", new Date(System.currentTimeMillis()));
-		urlVars.put("city", "Mumbai");
-
-		Map<String, Object> timelyTemperatureMap = new HashMap<String, Object>();
-		timelyTemperatureMap.put("time", new Time(System.currentTimeMillis()));
-		timelyTemperatureMap.put("temperature", 10);
-
-		List<Map<String, Object>> timelytempList = new ArrayList<Map<String, Object>>();
-		timelytempList.add(timelyTemperatureMap);
-
-		urlVars.put("timelyTemperatures", timelytempList);
-
-		new JSONObject(urlVars);
+		Map<String, Object> urlVars = getCityPayload();
 
 		HttpEntity<String> request = new HttpEntity<String>(new JSONObject(urlVars).toString(), headers);
 
@@ -101,5 +87,24 @@ public class WeatherClientAppApplication {
 
 		System.out.println(response.getBody());
 
+	}
+
+	public Map<String, Object> getCityPayload() {
+
+		Map<String, Object> urlVars = new HashMap<String, Object>();
+
+		urlVars.put("date", new Date(System.currentTimeMillis()));
+		urlVars.put("city", "City_" + System.currentTimeMillis());
+
+		Map<String, Object> timelyTemperatureMap = new HashMap<String, Object>();
+		timelyTemperatureMap.put("time", new Time(System.currentTimeMillis()));
+		timelyTemperatureMap.put("temperature", 10);
+
+		List<Map<String, Object>> timelytempList = new ArrayList<Map<String, Object>>();
+		timelytempList.add(timelyTemperatureMap);
+
+		urlVars.put("timelyTemperatures", timelytempList);
+
+		return urlVars;
 	}
 }
