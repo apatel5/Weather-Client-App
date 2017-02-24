@@ -5,5 +5,3 @@ applications:
   domain: local.pcfdev.io
   env:
     T_SERVICE_HOST: citytemperatures.local.pcfdev.io
-  services:
-  - instance1
