@@ -1,16 +1,34 @@
 package com.pcf.training.weatherapp.client;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Env {
 
 	public static String serviceHost;
-	public static String servicePort;
-	public static String serviceAdminUserName;
-	public static String serviceAdminPassword;
 
 	static {
-		serviceHost = System.getenv("T_SERVICE_HOST");
-		// servicePort = System.getenv("T_SERVICE_PORT");
-		// serviceAdminUserName = System.getenv("T_SERVICE_ADMIN_USERNAME");
-		// serviceAdminPassword = System.getenv("T_SERVICE_ADMIN_PASSWORD");
+		serviceHost = System.getenv("VCAP_SERVICES");
+		String VCAP_SERVICES = System.getenv("VCAP_SERVICES");
+		if (VCAP_SERVICES != null) {
+			JSONObject vcap;
+			try {
+				vcap = new JSONObject(VCAP_SERVICES);
+
+				URL serviceUri = new URL(new JSONObject(
+						new JSONObject(new JSONArray(vcap.get("Weather-Service").toString()).get(0).toString())
+								.get("credentials").toString()).get("uri").toString());
+
+				serviceHost = serviceUri.getHost();
+
+			} catch (JSONException | MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
