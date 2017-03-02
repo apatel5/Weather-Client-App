@@ -26,7 +26,7 @@ public class WeatherClientAppApplication {
 
 	private RestTemplate restTemplate;
 
-	private String temperatureServiceURL = "http://" + Env.serviceHost + "/city";
+	private String temperatureServiceURL = "http://" + Env.serviceHost + "/mediator";
 
 	public static void main(String[] args) {
 		SpringApplication.run(WeatherClientAppApplication.class, args);
@@ -77,7 +77,7 @@ public class WeatherClientAppApplication {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testGetAllDataMethod(RestTemplate restTemplate) {
 
-		String url = "http://citytemperatures.local.pcfdev.io/city/getAll";
+		String url = temperatureServiceURL + "/getAll";
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
